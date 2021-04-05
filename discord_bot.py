@@ -761,6 +761,85 @@ async def ball(ctx, *, message):
     await ctx.send(':8ball: ' + answer)
 
 
+@client.command()
+async def manga(ctx, *, query):
+    entries = await kitsu.search('manga', query, limit=1)
+
+    if not entries:
+       await ctx.send(f'No entries found for "{query}"')
+
+
+    for i, manga in enumerate(entries, 1):
+
+        manga_embed = discord.Embed(title = f'{manga.title}', description = f'{manga.synopsis}')
+
+        if manga.status:
+            manga_embed.add_field(name = ':hourglass_flowing_sand: Status ', value = f'{manga.status.upper()}', inline = False)
+
+        if manga.subtype:
+            manga_embed.add_field(name = ':dividers: Type', value = f'{manga.subtype.upper()}', inline = True)
+
+
+        if manga.started_at and manga.ended_at:
+
+            manga_embed.add_field(name = ':calendar_spiral: Published',
+                                  value = f"from {manga.started_at.strftime('%d-%m-%Y')} to {manga.ended_at.strftime('%d-%m-%Y')}",
+                                  inline = False)
+
+        elif manga.started_at:
+
+            manga_embed.add_field(name=':calendar_spiral: Published',
+                                  value=f"from {manga.started_at.strftime('%d-%m-%Y')} to ?",
+                                  inline=False)
+
+        else:
+            manga_embed.add_field(name=':calendar_spiral: Published',
+                                  value='from ? to ?',
+                                  inline=False)
+
+        if manga.chapter_count:
+           manga_embed.add_field(name = ':newspaper: Chapters', value = f'{manga.chapter_count}', inline = True)
+
+        else:
+            manga_embed.add_field(name=':newspaper: Chapters', value= '?', inline=True)
+
+
+        if manga.volume_count:
+            manga_embed.add_field(name = ':books: Volumes', value = f'{manga.volume_count}', inline = True)
+
+        else:
+            manga_embed.add_field(name=':books: Volumes', value= '?', inline=True)
+
+
+        manga_embed.add_field(name = ':heart: Populartiy', value = f'#{manga.popularity_rank}', inline = False)
+
+        if manga.age_rating_guide:
+            manga_embed.add_field(name = 'Age Rating', value = f'{manga.age_rating_guide}', inline = True)
+
+        r = requests.get("https://api.qwant.com/api/search/images",
+                         params={
+                             'count': 50,
+                             'q': manga.title,
+                             't': 'images',
+                             'safesearch': 0,
+                             'locale': 'en_US',
+                             'uiv': 4
+                         },
+                         headers={
+                             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36'
+                         }
+                         )
+
+        response = r.json().get('data').get('result').get('items')
+        urls = [r.get('media') for r in response]
+        manga_embed.set_thumbnail(url = urls[0])
+
+
+
+        await ctx.send(embed = manga_embed)
+
+
+
 
 
 
