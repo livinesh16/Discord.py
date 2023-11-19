@@ -860,4 +860,4 @@ async def manga(ctx, *, query):
 
 
 
-client.run("ODAzODMxNjA0MzQ2MzU1NzQz.YBDghA.fcllH2CxfR1JNn5YXWqtnv23NV8")
+client.run("Discord-Bot-Token")        
