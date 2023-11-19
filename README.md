@@ -21,4 +21,4 @@ import pypokedex
 
 
 Install FFMPEG
-installation command for googletrans : pip install googletras==3.1.0a0
+installation command for googletrans : pip install googletrans==3.1.0a0
