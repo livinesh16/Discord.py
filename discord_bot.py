@@ -185,27 +185,6 @@ async def hello(ctx):
 
 @client.command()
 async def who_is(ctx, *, name):
-    if name in ['Snehal', 'snehal', 'SNEHAL', 'SPOP', 'spop', 'Spop']:
-        await ctx.send("He is \"vengeance\" apparently. It's too small, that's what she said.")
-
-
-    elif name in ['Junaidh', 'Mohammed', 'mohammed junaidh', 'junaidh', 'MOHAMMED', 'MOHAMMED JUNAIDH', 'Mohammed Junaidh']:
-        await ctx.send(
-            "If you know what mathematics is, then you know him. If you don't know him you have no idea what math is"
-            )
-
-    elif name in ['Aneesh', 'aneesh', 'ANEESH', 'R.N.S.Aneesh', 'r.n.s.aneesh']:
-        await ctx.send("I heard that he's a great chemist")
-
-
-    elif name in ['Harshit', 'harshit', 'HARSHIT']:
-        await ctx.send("He's Just SAVAGE")
-
-
-    elif name in ['Livinesh', 'livi', 'Livi', 'LIVINESH', 'LIVI', 'livinesh']:
-        await ctx.send("My Creator")
-
-    else:
         await ctx.send('The details about {} is not in my database'.format(name))
 
 
@@ -246,7 +225,7 @@ async def clear_error(error, ctx):
 @client.command()
 async def gif(ctx, *, search):
     # to search for a gif
-    apikey = "HCB7UEV7JFX5"
+    apikey = "APIKEY"
     lmt = 1
     search_term = search
 
