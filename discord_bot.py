@@ -25,13 +25,13 @@ intents.message_content = True
 client = commands.Bot(command_prefix="*",intents = intents)
 client.remove_command('help')
 
-log = r"C:\Users\logan\PycharmProjects\pythonProject\Bot_Logs.txt"
+log = r"./Bot_Logs.txt"
 
 
 @client.event
 async def on_ready():
     await client.change_presence(activity=discord.Game(name='*help'))
-        # for filename in os.listdir(r"C:\Users\logan\PycharmProjects\pythonProject\Cogs"):
+        # for filename in os.listdir(r"./Cogs"):
         #  if filename.endswith('.py'):
         #     #client.load_extension(f'Cogs.{filename[:-3]}')
         #     #print(f'Loaded Cogs.{filename[:-3]}')
