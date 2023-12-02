@@ -79,7 +79,7 @@ async def cog(ctx, *, argument):
         cogs = discord.Embed(title='Cogs', description='This is a list of the cogs available in this bot')
         cogs.set_author(name='Dream Bot', icon_url='https://i.pinimg.com/originals/33/11/92/3311924db62ceef62a4a7ee87017280f.jpg')
         cogs.set_thumbnail(url='https://i.pinimg.com/originals/b1/0e/17/b10e1773b3f8fb334b8c9472c2ae3336.png')
-        for filename in os.listdir(r"C:\Users\logan\PycharmProjects\pythonProject\Cogs"):
+        for filename in os.listdir(r"./Cogs"):
             if filename.endswith('.py'):
 
                 cogs.add_field(name=str(num), value=f'{filename[:-3]}', inline=False)
@@ -351,17 +351,17 @@ async def play(ctx, *, search):
     url = ('https://www.youtube.com/watch?v=' + search_results[0])
 
     # playing song
-    song = os.path.isfile("C:/Users/logan/PycharmProjects/pythonProject/song.mp3")
+    song = os.path.isfile("./song.mp3")
     try:
         if song:
-            os.remove('C:/Users/logan/PycharmProjects/pythonProject/song.mp3')
+            os.remove('./song.mp3')
     except PermissionError:
         await ctx.send("Wait until the current song ends. You can't create playlists in this bot as of now ")
         return
 
     ydl_opts = {
         'format': 'bestaudio/best',
-        'outtmpl': 'C:/Users/logan/PycharmProjects/pythonProject/%(title)s.%(ext)s',
+        'outtmpl': './%(title)s.%(ext)s',
 
         'postprocessors': [{
             'key': 'FFmpegExtractAudio',
@@ -371,10 +371,10 @@ async def play(ctx, *, search):
     }
     with youtube_dl.YoutubeDL(ydl_opts) as ydl:
         ydl.download([url])
-    for file in os.listdir("C:/Users/logan/PycharmProjects/pythonProject/"):
+    for file in os.listdir("./"):
         if file.endswith(".mp3"):
             os.rename(file, "song.mp3")
-    voice.play(discord.FFmpegPCMAudio("C:/Users/logan/PycharmProjects/pythonProject/song.mp3"))
+    voice.play(discord.FFmpegPCMAudio("./song.mp3"))
     await ctx.send('Playing  ' + url)
 
 
