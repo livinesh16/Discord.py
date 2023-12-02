@@ -16,25 +16,30 @@ import asyncio
 import random
 from googletrans import Translator
 import pypokedex
+from youtubesearchpython import ChannelsSearch
 kitsu = kitsu.Client()
 
 status = "Up and Running"
-
-client = commands.Bot(command_prefix="*")
+intents = discord.Intents.default()
+intents.message_content = True
+client = commands.Bot(command_prefix="*",intents = intents)
 client.remove_command('help')
+
+log = r"C:\Users\logan\PycharmProjects\pythonProject\Bot_Logs.txt"
 
 
 @client.event
 async def on_ready():
     await client.change_presence(activity=discord.Game(name='*help'))
-    #for filename in os.listdir(r"C:\Users\logan\PycharmProjects\pythonProject\Cogs"):
-        #if filename.endswith('.py'):
-            #client.load_extension(f'Cogs.{filename[:-3]}')
-            #print(f'Loaded Cogs.{filename[:-3]}')
+        # for filename in os.listdir(r"C:\Users\logan\PycharmProjects\pythonProject\Cogs"):
+        #  if filename.endswith('.py'):
+        #     #client.load_extension(f'Cogs.{filename[:-3]}')
+        #     #print(f'Loaded Cogs.{filename[:-3]}')
 
     print('Bot is Ready')
 
 client.remove_command('help')
+
 
 
 @client.event
@@ -89,22 +94,36 @@ async def cog(ctx, *, argument):
 @client.command(aliases=['Help', 'HELP'])
 async def help(ctx, *, category):
     category = str(category)
+    logs = open("./log.txt", "w")
 
     if category in ['Clear', 'clear', 'CLEAR', '1']:
-        clear = discord.Embed(title = 'Clear Chat', description = 'This command clears a specified number of messages')
-        clear.add_field(name = 'Syntax', value = r'*clear<space><number of messages to be deleted>', inline = False)
-        clear.add_field(name = 'Note', value = 'You need to have permission to manage messages in order to use this command', inline = False)
+        clear = discord.Embed(title='Clear Chat', description='This command clears a specified number of messages', colour=discord.Colour.purple())
+        clear.add_field(name='Syntax', value=r'*clear<space><number of messages to be deleted>', inline=False)
+        clear.add_field(name='Note', value='You need to have permission to manage messages in order to use this command', inline=False)
         clear.set_author(name='Dream Bot',icon_url='https://i.pinimg.com/originals/33/11/92/3311924db62ceef62a4a7ee87017280f.jpg')
-        await ctx.send(embed = clear)
+        await ctx.send(embed=clear)
+        logs.write(f"{ctx.author} Used : \n *help Clear")
+        
 
-    if category in ['Music', 'music', 'MUSIC', '2']:
-        pass
+    elif category in ['Music', 'music', 'MUSIC', '2']:
+        music = discord.Embed(title = 'Music', description = 'This command lets you play music on a VoiceChannel using the bot', colour = discord.Colour.purple())
+        print(1)
+        music.set_author(name = 'Dream Bot', icon_url = 'https://i.pinimg.com/originals/33/11/92/3311924db62ceef62a4a7ee87017280f.jpg'  )
+        print(2)
+        music.set_thumbnail(url = 'https://yt3.ggpht.com/NCImrzJJqwVhiEuPJqrMTdVoePZnK45J9uDV-MOjwzGdw_0jFMzQwlwABt4am56c44Ny97nm=s176-c-k-c0x00ffffff-no-rj-mo')
+        print(3)
+        music.add_field(name = 'Step 1', value = r'Join a VoiceChannel and use the command *join ', inline = False)
+        print(4)
+        music.add_field(name = 'Step 2', value = r'Play your desired song using the *play command', inline = False)
+        print(5)
+        music.add_field(name = 'Syntax', value = r'*play<space><name of the song>', inline = False)
+        await ctx.send(embed = music)
 
 
 
-    if category in ['moderation', 'Moderation', 'MODERATION', '3']:
-        mod = discord.Embed(name='Moderation',
-                                description='These are the moderation commands available in this bot')
+    elif category in ['moderation', 'Moderation', 'MODERATION', '3']:
+        mod = discord.Embed(title='Moderation',
+                                description='These are the moderation commands available in this bot', colour = discord.Colour.purple())
         mod.set_author(name='Dream Bot',
                            icon_url='https://i.pinimg.com/originals/33/11/92/3311924db62ceef62a4a7ee87017280f.jpg')
         mod.set_thumbnail(url='https://discord.com/assets/a6193089fb762c7874fffcc9e61fa91e.svg')
@@ -114,19 +133,38 @@ async def help(ctx, *, category):
         mod.add_field(name='List of Banned Users', value=r'*ban_list', inline=False)
         await ctx.send(embed=mod)
 
-    if category in ['Search', 'search', 'SEARCH', '6']:
-        search = discord.Embed(title='Youtube Search', description='This command lets you search videos on youtube')
+    elif category in ['Ping', 'ping', 'PING', '4']:
+        ping = discord.Embed(title = 'Ping', description = 'This command allows you to find the latency or ping of the server', colour = discord.Colour.purple())
+        ping.add_field(name = 'Syntax', value = r'*ping')
+        ping.set_author(name = 'Dream Bot', icon_url = 'https://i.pinimg.com/originals/33/11/92/3311924db62ceef62a4a7ee87017280f.jpg')
+        ping.set_thumbnail(url = 'https://cdn1.iconfinder.com/data/icons/social-messaging-ui-color-round-1/254000/09-512.png')
+        await ctx.send(embed = ping)
+
+
+    elif category in ['Search', 'search', 'SEARCH', '6']:
+        search = discord.Embed(title='Search Commands', description='These are the list of search commands available in this bot', colour = discord.Colour.purple())
         search.set_thumbnail(url='https://logodownload.org/wp-content/uploads/2014/10/youtube-logo-5-2.png')
         search.set_author(name='Dream Bot', icon_url='https://i.pinimg.com/originals/33/11/92/3311924db62ceef62a4a7ee87017280f.jpg')
-        search.add_field(name='Syntax ', value=r'*youtube<space><query>', inline=False)
+        search.add_field(name = 'Youtube Search', value = '*youtube<space><query>', inline = False )
+        search.add_field(name = 'Anime Search', value = 'Syntax : *anime<space><title of the anime>', inline = False)
+        search.add_field(name = 'Manga Search', value = 'Syntax: *anime<space><title of the manga>', inline = False)
         await ctx.send(embed=search)
+
+    else:
+        help_embed = discord.Embed(title = "Help Categories", description = "Choose a category with the following Syntax", colour = discord.Colour.purple())
+        help_embed.add_field(name = 'Syntax', value = '*help<space><Category>')
+        help_embed.set_author(name = 'Dream Bot', icon_url = 'https://i.pinimg.com/originals/33/11/92/3311924db62ceef62a4a7ee87017280f.jpg')
+        help_embed.set_thumbnail(url = 'https://images.fineartamerica.com/images-medium-large-5/earth-and-question-mark-from-stars-johan-swanepoel.jpg')
+        await ctx.send(f'{ctx.author} Enter a given Category')
+
+    
 
 
 
 @help.error
 async def help_error(ctx, error):
     if isinstance(error, commands.MissingRequiredArgument):
-        help = discord.Embed(title='Categories ', description='1) Clear \n2) Music \n3) Moderation \n4) Ping \n5) Geographical \n 6) Search')
+        help = discord.Embed(title='Categories ', description='1) Clear \n2) Music \n3) Moderation \n4) Ping \n5) Geographical \n 6) Search', colour = discord.Colour.purple())
         help.set_author(name='Dream Bot', icon_url='https://i.pinimg.com/originals/33/11/92/3311924db62ceef62a4a7ee87017280f.jpg')
 
         await ctx.send(embed=help)
@@ -161,11 +199,11 @@ async def who_is(ctx, *, name):
 
 
     elif name in ['Harshit', 'harshit', 'HARSHIT']:
-        await ctx.send("he's Just SAVAGE")
+        await ctx.send("He's Just SAVAGE")
 
 
     elif name in ['Livinesh', 'livi', 'Livi', 'LIVINESH', 'LIVI', 'livinesh']:
-        await ctx.send("My Daddy")
+        await ctx.send("My Creator")
 
     else:
         await ctx.send('The details about {} is not in my database'.format(name))
@@ -256,7 +294,7 @@ async def ip_link(ctx):
 @client.command()
 async def chem_link(ctx):
     # to get chemistry link
-    await ctx.send("https://meetingsapac17.webex.com/meetingsapac17/j.php?MTID=mec6d949106fd548f1c3e879b235fa3c9")
+    await ctx.send("https://meet66.webex.com/meet/pr1589148547")
 
 
 @client.command()
@@ -303,9 +341,6 @@ async def play(ctx, *, search):
     channel = ctx.message.author.voice.channel
 
 
-
-
-
     # searching query and saving url
     search_query = search.replace(' ', '+')
     htm_content = urllib.request.urlopen(
@@ -316,16 +351,17 @@ async def play(ctx, *, search):
     url = ('https://www.youtube.com/watch?v=' + search_results[0])
 
     # playing song
-    song = os.path.isfile("C:/Users/logan/PycharmProjects/pythonProject/Music/song.mp3")
+    song = os.path.isfile("C:/Users/logan/PycharmProjects/pythonProject/song.mp3")
     try:
         if song:
-            os.remove('C:/Users/logan/PycharmProjects/pythonProject/Music/song.mp3')
+            os.remove('C:/Users/logan/PycharmProjects/pythonProject/song.mp3')
     except PermissionError:
         await ctx.send("Wait until the current song ends. You can't create playlists in this bot as of now ")
         return
 
     ydl_opts = {
         'format': 'bestaudio/best',
+        'outtmpl': 'C:/Users/logan/PycharmProjects/pythonProject/%(title)s.%(ext)s',
 
         'postprocessors': [{
             'key': 'FFmpegExtractAudio',
@@ -335,10 +371,10 @@ async def play(ctx, *, search):
     }
     with youtube_dl.YoutubeDL(ydl_opts) as ydl:
         ydl.download([url])
-    for file in os.listdir("C:/Users/logan/PycharmProjects/pythonProject/Music"):
+    for file in os.listdir("C:/Users/logan/PycharmProjects/pythonProject/"):
         if file.endswith(".mp3"):
             os.rename(file, "song.mp3")
-    voice.play(discord.FFmpegPCMAudio("song.mp3"))
+    voice.play(discord.FFmpegPCMAudio("C:/Users/logan/PycharmProjects/pythonProject/song.mp3"))
     await ctx.send('Playing  ' + url)
 
 
@@ -471,7 +507,7 @@ async def anime(ctx, *, query):
         await ctx.send(f'{"No results found for the query " + query}')
     else:
         for i, anime in enumerate(entries, 1):
-            anime_embed = discord.Embed(title = f'{anime.title}', description = f'{anime.synopsis}', colour = discord.Colour.blue())
+            anime_embed = discord.Embed(title = f'{anime.title}', description = f'{anime.synopsis}', colour = discord.Colour.purple())
             anime_embed.add_field(name=':hourglass_flowing_sand: Status', value=f'{anime.status}', inline = True)
             anime_embed.add_field(name=':dividers: Type', value = f'{anime.subtype}', inline = True)
             anime_embed.add_field(name =':calendar_spiral: Aired', value = f'from {anime.started_at.strftime("%d-%m-%Y")} to {anime.ended_at.strftime("%d-%m-%Y") }', inline = False)
@@ -643,7 +679,7 @@ async def reverse(ctx, *, message):
     await ctx.send(reversed_string)
 
 @client.command()
-async def remainder(ctx, date_time, * , message:str):
+async def reminder(ctx, date_time, * , message:str):
     date = datetime.now()
     while date < date_time:
         date = datetime.now()
@@ -666,6 +702,10 @@ async def countdown(ctx, num):
                 await asyncio.sleep(1)
 
     except ValueError:
+        await ctx.send("Enter a number")
+@countdown.error
+async def countdown_error(ctx, error):
+    if isinstance(error, commands.MissingRequiredArgument):
         await ctx.send("Enter a number")
 
 @client.command()
@@ -771,7 +811,7 @@ async def manga(ctx, *, query):
 
     for i, manga in enumerate(entries, 1):
 
-        manga_embed = discord.Embed(title = f'{manga.title}', description = f'{manga.synopsis}')
+        manga_embed = discord.Embed(title = f'{manga.title}', description = f'{manga.synopsis}', colour = discord.Colour.purple())
 
         if manga.status:
             manga_embed.add_field(name = ':hourglass_flowing_sand: Status ', value = f'{manga.status.upper()}', inline = False)
@@ -838,26 +878,35 @@ async def manga(ctx, *, query):
 
         await ctx.send(embed = manga_embed)
 
+@client.command()
+async def youtube_channel(ctx, *, name):
+    print(1)
+    channel = ChannelsSearch(name, limit=1)
+    print(2)
+    result = channel.result()['result'][0]
+    print(3)
+    channel_embed = discord.Embed(title = f"{result['title']}", description = f"{result['descriptionSnippet'][0]['text']}", colour=discord.Colour.purple())
+    print('4--->', end = '');print(result['title']); print(result['descriptionSnippet'][0]['text'])
+    channel_embed.set_thumbnail(url=f"{result['thumbnails'][1]['url']}")
+    print(f"5 ----> {result['thumbnails'][1]['url']}")
+    channel_embed.add_field(name='Subscribers', value=f"{result['subscribers']}", inline = False )
+    print(f"6 ---> {result['subscribers']}")
+    channel_embed.add_field(name='Videos', value=f"{result['videoCount']}", inline = True)
+    print(f"7 ---> {result['videoCount']}")
+    channel_embed.add_field(name='Channel URL', value=f"{result['link']}")
+    print(f"8 --->{result['link']}")
+    await ctx.send(embed = channel_embed)
+    print(9)
+
+@client.command()
+async def servers(ctx):
+    await ctx.send(len(client.guilds))
+
+@client.command()
+async def invite(ctx):
+    await ctx.send("https://discord.com/api/oauth2/authorize?client_id=834282533012766730&permissions=4294967287&scope=bot")
 
 
 
+client.run("Token")
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-client.run("Discord-Bot-Token")        
