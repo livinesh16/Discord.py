@@ -257,37 +257,6 @@ async def youtube(ctx, *, search):
     search_results = re.findall(r"watch\?v=(\S{11})", htm_content.read().decode())
     await ctx.send('https://www.youtube.com/watch?v=' + search_results[0])
 
-
-@client.command()
-async def eng_link(ctx):
-    # To get English link
-    await ctx.send("https://meetingsapac10.webex.com/meet/lrks7022")
-
-
-@client.command()
-async def ip_link(ctx):
-    # to get I.P link
-    await ctx.send("https://meetingsapac14.webex.com/meet/vanithaacj02")
-
-
-@client.command()
-async def chem_link(ctx):
-    # to get chemistry link
-    await ctx.send("https://meet66.webex.com/meet/pr1589148547")
-
-
-@client.command()
-async def phy_link(ctx):
-    # to get physics link
-    await ctx.send("https://meetingsapac17.webex.com/join/marteen.augnella")
-
-
-@client.command()
-async def maths_link(ctx):
-    #to get math link
-    await ctx.send("https://meetingsapac8.webex.com/join/krishnakkiran10")
-
-
 @client.command()
 async def join(ctx):
     # to make the bot join author's channel
