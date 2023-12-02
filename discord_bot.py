@@ -425,7 +425,7 @@ async def multiplication(ctx , num):
 @client.command(aliases = ['Instagram','INSTAGRAM'])
 async def instagram(ctx, *, username:str):
     #defining variables
-    session_id = '35385143302%3AUufG9duDPBLc7h%3A27'
+    session_id = 'SESSION_ID'
     #Scraping Data
     user = InstagramUser(username, session_id)
     userinfo = user.user_data
@@ -488,8 +488,8 @@ async def anime(ctx, *, query):
 
 @client.command()
 async def imgur(ctx, *, query):
-    client_id = '88ae741b01592db'
-    client_secret = '0bb22a688bbc5d800dd57cd9cc80521770f031fc'
+    client_id = 'CLIENT_ID'
+    client_secret = 'CLIENT_SECRET'
     imgur_1 = ImgurClient(client_id, client_secret)
     items = imgur_1.gallery_search(query)
     await ctx.send(items[0].link)
@@ -537,7 +537,7 @@ async def geo_fwd(ctx, query, *, region):
     conn = http.client.HTTPConnection('api.positionstack.com')
 
     parameters = urllib.parse.urlencode({
-            'access_key': 'd1e4e5547bceef63abb78812f825d3fc',
+            'access_key': 'ACCESS_KEY',
             'query': query,
             'region': region,
             'limit': 1, })
@@ -577,7 +577,7 @@ async def geo_rev(ctx, latitude, *, longitude):
 
 
     parameters = ({
-            'access_key': 'd1e4e5547bceef63abb78812f825d3fc',
+            'access_key': 'ACCESS_KEY',
             'query': f'{latitude,longitude}'
              })
     conn.request('GET', '/v1/reverse?{}'.format(parameters))
