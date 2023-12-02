@@ -12,7 +12,7 @@ class Geo(commands.Cog):
         conn = http.client.HTTPConnection('api.positionstack.com')
 
         parameters = urllib.parse.urlencode({
-            'access_key': 'd1e4e5547bceef63abb78812f825d3fc',
+            'access_key': 'ACCESS_KEY',
             'query': query,
             'region': region,
             'limit': 1, })
@@ -52,7 +52,7 @@ class Geo(commands.Cog):
 
 
         parameters = ({
-            'access_key': 'd1e4e5547bceef63abb78812f825d3fc',
+            'access_key': 'ACCESS_KEY',
             'query': f'{latitude,longitude}'
              })
         conn.request('GET', '/v1/reverse?{}'.format(parameters))
